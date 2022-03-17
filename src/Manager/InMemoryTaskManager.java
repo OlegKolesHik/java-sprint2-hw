@@ -57,12 +57,11 @@ public class InMemoryTaskManager implements TaskManager {
         }
             return epicT.get(EpicIdNumber);
     }
-
+        @Override
         public List<Task> history() {
-          return historyManager.getHistory();
+            return historyManager.getHistory();
     }
         //////////////////
-
 
         @Override
         public void clear() {  //2.2  Удаление всех задач

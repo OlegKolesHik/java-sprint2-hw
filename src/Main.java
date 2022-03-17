@@ -4,7 +4,6 @@ import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
 
-
 public class Main {
     public static void main(String[] args) {
 
@@ -26,15 +25,14 @@ System.out.println("Создание эпика" + taskManager.creature(epic));
 
 inMemoryTaskManager.getTask(44444l);
 taskManager.gettingId(333333l);
-System.out.println(inMemoryTaskManager.history());
+System.out.println(taskManager.history());
 
 taskManager.creatureSub(subtask);
 inMemoryTaskManager.getEpic(44444444l);
-System.out.println(inMemoryTaskManager.history());
+System.out.println(taskManager.history());
 
 taskManager.clear();
-System.out.println(inMemoryTaskManager.history());
+System.out.println(taskManager.history());
 
     }
-
 }
