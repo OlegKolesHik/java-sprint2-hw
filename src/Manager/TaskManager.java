@@ -25,6 +25,6 @@ public interface TaskManager {
     HashMap removeEpic(Long epicIdNumber);
     HashMap creature(Epic epic);
 
-    public List<Task> history();
+    public List<InMemoryHistoryManager.Node<Task>> history();
 }
 

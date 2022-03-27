@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Epic extends Task {
     private Long subtaskIdNumber;
 
-    public Epic(String сaseName, String taskDescription, String statusTask) { // свои параметры и параметры супер-класса
+    public Epic(String сaseName, String taskDescription, TaskStatus statusTask) { // свои параметры и параметры супер-класса
         super(сaseName, taskDescription, statusTask); // параметры супер-класса
         this.subtaskIdNumber = subtaskIdNumber;
 
@@ -37,10 +37,10 @@ public class Epic extends Task {
 
         ArrayList<String> st = new ArrayList<>();
         for (Integer k : subtaskT.keySet() ) {
-            st.add(subtaskT.get(k).getStatusTask());
+            st.add(String.valueOf(subtaskT.get(k).getStatusTask()));
         }
          if (st.isEmpty()) {
-              statusTask = String.valueOf(TaskStatus.NEW);
+              statusTask = TaskStatus.NEW;
             return;
          }
          if (statusTask.equals(TaskStatus.NEW)) {

@@ -5,7 +5,7 @@ public class Subtask extends Task {
 
     private Long epicIdNumber; //Параметр в рамках какого эпика она выполняется
 
-    public Subtask(String сaseName, String taskDescription, String statusTask) {
+    public Subtask(String сaseName, String taskDescription, TaskStatus statusTask) {
         super(сaseName, taskDescription, statusTask);
         this.epicIdNumber = epicIdNumber;
 

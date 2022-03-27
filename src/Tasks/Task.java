@@ -5,17 +5,17 @@ public class Task {
     protected String сaseName; // Название, кратко описывающее суть задачи (например, «Переезд»).
     protected String taskDescription; // Описание, в котором раскрываются детали.
     private Long taskIdNumber;
-    protected String statusTask; // Статус, отображающий её прогресс. Мы будем выделять следующие этапы жизни задачи:
+    protected TaskStatus statusTask; // Статус, отображающий её прогресс. Мы будем выделять следующие этапы жизни задачи:
 
-    public Task(String сaseName, String taskDescription, String statusTask) {
+    public Task(String сaseName, String taskDescription, TaskStatus statusTask) {
         this.сaseName = сaseName;
         this.taskDescription = taskDescription;
         taskIdNumber = 0L;
-        this.statusTask = statusTask;
+        this.statusTask = TaskStatus.NEW;
     }
 
-    public String getStatusTask() {
-        return statusTask;
+    public TaskStatus getStatusTask() {
+        return TaskStatus.NEW;
     }
 
     public Long getTaskIdNumber() {

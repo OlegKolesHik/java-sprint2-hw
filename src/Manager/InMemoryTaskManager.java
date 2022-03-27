@@ -58,7 +58,7 @@ public class InMemoryTaskManager implements TaskManager {
             return epicT.get(EpicIdNumber);
     }
         @Override
-        public List<Task> history() {
+        public List<InMemoryHistoryManager.Node<Task>> history() {
             return historyManager.getHistory();
     }
         //////////////////
@@ -69,7 +69,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         @Override
-        public HashMap gettingId(Long taskIdNumber) { //2.3 Получение по идентификатору
+        public HashMap<Long, Task> gettingId(Long taskIdNumber) { //2.3 Получение по идентификатору
             taskT.get(taskIdNumber);
             return taskT;
         }
@@ -81,7 +81,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         @Override
-        public HashMap creature(Task task) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
+        public HashMap<Long, Task> creature(Task task) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
             taskT.put(task.getTaskIdNumber(), task);
             return taskT;
         }
@@ -93,19 +93,19 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         @Override
-        public HashMap gettingIdSub(Long subtaskIdNumber) { //2.3 Получение по идентификатору
+        public HashMap<Long, Subtask>gettingIdSub(Long subtaskIdNumber) { //2.3 Получение по идентификатору
             subtaskT.get(subtaskIdNumber);
             return subtaskT;
         }
 
         @Override
-        public HashMap removeSub(Long subtaskIdNumber) { //2.6 Удаление по идентификатору.
+        public HashMap<Long, Subtask> removeSub(Long subtaskIdNumber) { //2.6 Удаление по идентификатору.
             subtaskT.remove(subtaskIdNumber);
             return subtaskT;
         }
 
         @Override
-        public HashMap creatureSub(Subtask subtask) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
+        public HashMap<Long, Subtask> creatureSub(Subtask subtask) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
             subtaskT.put(subtask.getTaskIdNumber(), subtask);
             return subtaskT;
         }
@@ -117,19 +117,19 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         @Override
-        public HashMap gettingIdEpic(Long epicIdNumber) { //2.3 Получение по идентификатору
+        public HashMap<Long, Epic> gettingIdEpic(Long epicIdNumber) { //2.3 Получение по идентификатору
             epicT.get(epicIdNumber);
             return epicT;
         }
 
         @Override
-        public HashMap removeEpic(Long epicIdNumber) { //2.6 Удаление по идентификатору.
+        public HashMap<Long, Epic> removeEpic(Long epicIdNumber) { //2.6 Удаление по идентификатору.
             epicT.remove(epicIdNumber);
             return epicT;
         }
 
         @Override
-        public HashMap creature(Epic epic) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
+        public HashMap<Long, Epic> creature(Epic epic) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
             epicT.put(epic.getTaskIdNumber(), epic);
             return epicT;
         }

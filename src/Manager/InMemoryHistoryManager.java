@@ -1,41 +1,108 @@
 package Manager;
 
 import Tasks.Task;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+
 
 public class InMemoryHistoryManager implements HistoryManager {
 
     public static final int VIEWED_TASKS = 10;
 
-    ///Подумайте, каким образом и какие данные вы запишете в поля менеджера для возможности извлекать из них
-    // историю посещений
-
-    private List<Task> listTask;
+//собирать все задачи из него(списка) в обычный ArrayList//
+    public List<Node<Task>> allTasks;
+    public Map<Long, Node<Task>> historyList = new HashMap<>();
 
     public InMemoryHistoryManager() {
-        this.listTask = new LinkedList<>();
-    }
+    this.allTasks = new ArrayList<Node<Task>>();
+}
 
-    /*Если размер списка исчерпан,
-    из него нужно удалить самый старый элемент — тот который находится в начале списка. */
-    private void checkingReturnTasks () {
-        if (this.listTask.size() > VIEWED_TASKS) {
-            this.listTask.remove(0);
+// Элементы своего списка historyList в InMemoryHistoryManager
+    public Node<Task> head;
+    public Node<Task> tail;
+    public Node<Task> newTaskNode; // новая нода
+    public Node<Task> pastTaskNode; //Прошлая нод (до нашей newTaskNode)
+
+//Своя нода, своего LinkedList внутри InMemoryHistoryManager
+    public class Node<Task> {
+        private Task data;
+        private Node<Task> next;
+        private Node<Task> prev;
+
+        public Node(Task task) {
+            this.data = data;
+            this.next = next;
+            this.prev = prev;
         }
     }
 
+// Добавляем последнюю ноду в конец списка historyList
+    public void linkLast(Task task) {
+        newTaskNode = tail; //поместили ноду в хвост
+        newTaskNode.next = null; //ссылка на null
+        newTaskNode.prev = pastTaskNode; //ссылка новой на прошлую ноду
+        pastTaskNode.next = newTaskNode; //ссылка прошлой на новую ноду
+        historyList.put(task.getTaskIdNumber(), newTaskNode); //добавили все в список historyList
+
+    }
+
+    public void removeNode(Node node) {
+        if (head == null) { // если лист пуст
+            return; // то выходим из метода
+        }
+        if (head.next == node.data) { //если головная нода равна нашему искомому значению
+            head = head.next; // то убираем(перешагиваем) наш элемент списка(идем дальше)
+            return;
+        }
+        if (tail.prev == node.data) {// если хвост равен нашему искомому значению
+            tail = tail.prev;// то убираем (идем обратно)
+            return;
+        }
+    }
+
+//собирать все задачи из внутреннего списка в обычный ArrayList
+    public void getTasks() {
+        allTasks.add(head);
+        allTasks.add(tail);
+        allTasks.add(newTaskNode);
+        allTasks.add(pastTaskNode);
+    }
+
+    private void checkingReturnTasks() {
+        if (allTasks.size() > VIEWED_TASKS) {
+            allTasks.remove(0);
+        }
+    }
+
+//тз метод add(Task task) будет быстро удалять задачу из списка, если она там есть, а затем вставлять
+//её в конец двусвязного списка.
     @Override
-    public void add(Task task) {  //просмотренные задачи
-        checkingReturnTasks();
-          this.listTask.add(task);
+    public void add(Task task) {
+        if (historyList.containsKey(task.getTaskIdNumber())) {
+            removeNode(historyList.remove(task.getTaskIdNumber()));
+            linkLast(task);
+        }
+    }
+
+//тз реализация метода getHistory должна перекладывать задачи из связного списка в ArrayList для формирования ответа.
+    @Override
+    public List<Node<Task>> getHistory() {
+        for(Node value : historyList.values()) {
+            allTasks.add(value);
+        }
+   return allTasks;
     }
 
     @Override
-    public List<Task> getHistory() {
-        return listTask;
+    public void remove(Task task) {
+        if (historyList.containsKey(task.getTaskIdNumber())) {
+            checkingReturnTasks();
+        }
+
     }
-
-
-
 }
+
+
+
+
+
+

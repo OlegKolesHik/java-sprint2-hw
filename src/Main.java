@@ -3,36 +3,42 @@ import Manager.*;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
+import Tasks.TaskStatus;
 
 public class Main {
     public static void main(String[] args) {
 
 TaskManager taskManager = new Managers().getDefault();
 InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
 
-Task task = new Task("Задача", "Описание", "");
-taskManager.creature(task);
-System.out.println("Создание задачи" + taskManager.creature(task));
+//создайте две задачи, эпик с тремя подзадачами и эпик без подзадач;
+Task task = new Task("Задача", "Описание", TaskStatus.NEW);
+System.out.println("Создание задачи 1 " + taskManager.creature(task));
+System.out.println("Создание задачи 2 " + taskManager.creature(task));
 
-Subtask subtask = new Subtask("Подзадача №1", "Описание 1 подзадачи", "");
-taskManager.creatureSub(subtask);
-System.out.println("Создание подзадачи" + taskManager.creatureSub(subtask));
+Epic epic = new Epic("Эпик 1", "Описание 1 эпика", TaskStatus.NEW);
+System.out.println("Создание эпика 1 " + taskManager.creature(epic));
 
-Epic epic = new Epic("Эпик 1", "Описание 1 эпика", "");
-taskManager.creature(epic);
-System.out.println("Создание эпика" + taskManager.creature(epic));
-////////////////////////
+Subtask subtask = new Subtask("Подзадача №1", "Описание 1 подзадачи", TaskStatus.NEW);
+System.out.println("Создание подзадачи 1 " + taskManager.creatureSub(subtask));
+System.out.println("Создание подзадачи 2 " + taskManager.creatureSub(subtask));
+System.out.println("Создание подзадачи 3 " + taskManager.creatureSub(subtask));
 
-inMemoryTaskManager.getTask(44444l);
-taskManager.gettingId(333333l);
-System.out.println(taskManager.history());
+System.out.println("Создание эпика без подзадач " + taskManager.creature(epic));
 
-taskManager.creatureSub(subtask);
-inMemoryTaskManager.getEpic(44444444l);
-System.out.println(taskManager.history());
+//запросите созданные задачи несколько раз в разном порядке;
+//после каждого запроса выведите историю и убедитесь, что в ней нет повторов;
+System.out.println(inMemoryTaskManager.getSubtask(1111111111L));
+System.out.println("История просмотров: " + inMemoryHistoryManager.getHistory());
+System.out.println(inMemoryTaskManager.getTask(222222222222L));
+System.out.println("История просмотров: " + inMemoryHistoryManager.getHistory());
+System.out.println(inMemoryTaskManager.getEpic(333333333333L));
+System.out.println("История просмотров: " + inMemoryHistoryManager.getHistory());
 
-taskManager.clear();
-System.out.println(taskManager.history());
+//удалите задачу, которая есть в истории, и проверьте, что при печати она не будет выводиться;
+taskManager.removeEpic(epic.getTaskIdNumber());
+System.out.println("История просмотров: " + inMemoryHistoryManager.getHistory());
 
     }
 }
