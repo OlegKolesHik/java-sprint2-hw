@@ -6,9 +6,10 @@ import java.util.List;
 public interface HistoryManager {
 
     void add(Task task);
+
     void remove(Task task);
 
-    List<InMemoryHistoryManager.Node<Task>> getHistory();
+    List<Task> getHistory();
 
 }
 

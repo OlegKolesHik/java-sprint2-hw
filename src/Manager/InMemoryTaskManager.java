@@ -58,7 +58,7 @@ public class InMemoryTaskManager implements TaskManager {
             return epicT.get(EpicIdNumber);
     }
         @Override
-        public List<InMemoryHistoryManager.Node<Task>> history() {
+        public List<Task> history() {
             return historyManager.getHistory();
     }
         //////////////////
