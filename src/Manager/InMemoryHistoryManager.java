@@ -80,8 +80,8 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(Task task) {
-        if(nodeMap.isEmpty()) {
-           if (nodeMap.containsKey(task.getTaskIdNumber())) {
+        if(!nodeMap.isEmpty()) {
+           if(nodeMap.containsKey(task.getTaskIdNumber())) {
             checkingReturnTasks();
         }
      }
