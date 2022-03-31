@@ -10,7 +10,7 @@ public class Task {
     public Task(String сaseName, String taskDescription, TaskStatus statusTask) {
         this.сaseName = сaseName;
         this.taskDescription = taskDescription;
-        taskIdNumber = 0L;
+        this.taskIdNumber = 0L;
         this.statusTask = TaskStatus.NEW;
     }
 
@@ -22,13 +22,18 @@ public class Task {
         return taskIdNumber;
     }
 
+    public void setTaskIdNumber(Long taskIdNumber) {
+        this.taskIdNumber = taskIdNumber;
+    }
+
     @Override
     public String toString() {
         return "Tasks.Task{" +
                 "сaseName='" + сaseName + '\'' +
                 ", taskDescription='" + taskDescription + '\'' +
-                ", taskIdNumber=" + taskIdNumber +
+                ", IDTASK=" + taskIdNumber +
                 ", statusTask='" + statusTask + '\'' +
                 '}';
     }
+
 }

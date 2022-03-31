@@ -11,21 +11,22 @@ import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    Subtask subtask;
 
-    private static HistoryManager historyManager = Managers.getDefaultHistory();
+    public Long taskIdNumber;
+    public HashMap<Long, Epic> epicT;
+    public HashMap<Long, Subtask> subtaskT;
+    public HashMap<Long, Task> taskT;
 
-        public HashMap<Long, Epic> epicT;
-        public HashMap<Long, Subtask> subtaskT;
-        public HashMap<Long, Task> taskT;
+    public HistoryManager historyManager = Managers.getDefaultHistory();
 
         public InMemoryTaskManager() {
-            epicT = new HashMap<Long, Epic>();
-            subtaskT = new HashMap<Long, Subtask>();
-            taskT = new HashMap<Long, Task>();
+            this.taskIdNumber = 0L;
+            this.epicT = new HashMap<Long, Epic>();
+            this.subtaskT = new HashMap<Long, Subtask>();
+            this.taskT = new HashMap<Long, Task>();
 
         }
-
+Subtask subtask;
         public ArrayList<Task> gettingTask() {
             ArrayList<Task> ListIdTask = new ArrayList<>(); //2.1 Cписок всех задач
             for (Long k : taskT.keySet()) {
@@ -85,8 +86,10 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         @Override
-        public HashMap<Long, Task> creature(Task task) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
-            taskT.put(task.getTaskIdNumber(), task);
+        public HashMap creatureTask(Task task) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
+            taskIdNumber++;
+            task.setTaskIdNumber(taskIdNumber);
+            taskT.put(taskIdNumber, task);
             return taskT;
         }
         ///////////////////////////
@@ -109,8 +112,14 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         @Override
-        public HashMap<Long, Subtask> creatureSub(Subtask subtask) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
-            subtaskT.put(subtask.getTaskIdNumber(), subtask);
+        public HashMap creatureSub(Subtask subtask) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
+            if(subtask.getEpicIdNumber() != null) { // если эпик не пустой
+                if(epicT.containsKey(subtask.getEpicIdNumber())) { //и если ид эпика есть в epicT
+                    taskIdNumber++; // увеличили значение id
+                    subtask.setTaskIdNumber(taskIdNumber); // присвоили id это измененное значение
+                    subtaskT.put(taskIdNumber, subtask); // добавили id и подзадачу в таблицу подзадач
+                }
+            }
             return subtaskT;
         }
         ///////////////////////////
@@ -133,8 +142,10 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         @Override
-        public HashMap<Long, Epic> creature(Epic epic) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
-            epicT.put(epic.getTaskIdNumber(), epic);
+        public HashMap creatureEpic(Epic epic) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
+            taskIdNumber++;
+            epic.setTaskIdNumber(taskIdNumber);
+            epicT.put(taskIdNumber, epic);
             return epicT;
         }
 

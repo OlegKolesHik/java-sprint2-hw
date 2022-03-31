@@ -20,7 +20,7 @@ public class Subtask extends Task {
         return "Tasks.Subtask{" +
                 "сaseName='" + сaseName + '\'' +
                 ", SubtaskDescription='" + taskDescription + '\'' +
-                ", SubtaskIdNumber=" + getTaskIdNumber() +
+                ", IDSUBTASK=" + getTaskIdNumber() +
                 ", statusTask='" + statusTask + '\'' +
                 '}';
     }

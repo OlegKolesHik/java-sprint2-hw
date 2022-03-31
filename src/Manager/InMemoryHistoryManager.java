@@ -79,8 +79,8 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void add(Task task) {
         if (nodeMap.containsKey(task.getTaskIdNumber())) {
             removeNode(nodeMap.remove(task.getTaskIdNumber()));
-            linkLast(task);
-        }
+           }
+        linkLast(task);
     }
 
 //тз реализация метода getHistory должна перекладывать задачи из связного списка в ArrayList для формирования ответа.

@@ -17,7 +17,7 @@ public class Epic extends Task {
         return "Tasks.Epic{" +
                 "сaseName='" + сaseName + '\'' +
                 ", EpicDescription='" + taskDescription + '\'' +
-                ", EpicIdNumber=" + getTaskIdNumber() +
+                ", IDEPIC=" + getTaskIdNumber() +
                 ", statusTask='" + statusTask + '\'' +
                 '}';
     }

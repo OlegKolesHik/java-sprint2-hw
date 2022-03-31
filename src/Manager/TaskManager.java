@@ -11,7 +11,7 @@ public interface TaskManager {
     void clear();
     HashMap gettingId(Long taskIdNumber);
     HashMap remove(Long taskIdNumber);
-    HashMap creature(Task task);
+    HashMap creatureTask(Task task);
 ///////////////////////////
 
     void clearSub();
@@ -23,7 +23,7 @@ public interface TaskManager {
     void clearEpic();
     HashMap gettingIdEpic(Long epicIdNumber);
     HashMap removeEpic(Long epicIdNumber);
-    HashMap creature(Epic epic);
+    HashMap creatureEpic(Epic epic);
 
     public List<Task> history();
 }
