@@ -3,11 +3,15 @@ package Manager;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
+import Tasks.TaskStatus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
+
+    Subtask subtask;
 
     private static HistoryManager historyManager = Managers.getDefaultHistory();
 
@@ -31,7 +35,7 @@ public class InMemoryTaskManager implements TaskManager {
 
         }
         public HashMap<Long, Subtask> gettingEpik (Long taskIdNumber) { //3.1 Получение списка всех подзадач определённого эпика
-            Epic epic = epicT.get(taskIdNumber);
+            Epic epic = epicT.get(subtask.getEpicIdNumber());
             ArrayList<Long> ListId = epic.listIdSub();
 
             return subtaskT;
@@ -45,14 +49,14 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         public Subtask getSubtask(Long SubtaskIdNumber) {
-            if(taskT.containsKey(SubtaskIdNumber)) {
+            if(subtaskT.containsKey(SubtaskIdNumber)) {
             historyManager.add(subtaskT.get(SubtaskIdNumber));
         }
             return subtaskT.get(SubtaskIdNumber);
     }
 
         public Epic getEpic(Long EpicIdNumber) {
-            if(taskT.containsKey(EpicIdNumber)) {
+            if(epicT.containsKey(EpicIdNumber)) {
             historyManager.add(epicT.get(EpicIdNumber));
         }
             return epicT.get(EpicIdNumber);

@@ -55,4 +55,15 @@ public class Node {
     public int hashCode() {
         return Objects.hash(data, next, prev);
     }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "data=" + data +
+                ", next=" + next +
+                ", prev=" + prev +
+                ", head=" + head +
+                ", tail=" + tail +
+                '}';
+    }
 }

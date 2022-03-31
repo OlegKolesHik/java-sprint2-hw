@@ -4,12 +4,13 @@ import Tasks.Task;
 import java.util.*;
 
 
+
 public class InMemoryHistoryManager implements HistoryManager {
 
     public static final int VIEWED_TASKS = 10;
 
 //собирать все задачи из него(списка) в обычный ArrayList//
-    public ArrayList<Task> allTasks;
+    public ArrayList<Task> allTasks = new ArrayList<>();
     public Map<Long, Node> nodeMap = new HashMap<>();
 
     public InMemoryHistoryManager() {
@@ -34,26 +35,36 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     public void removeNode(Node node) {
-        if (head == null) { // если лист пуст
-            return; // то выходим из метода
-        }
-        if (head.getNext() == node) { //если головная нода равна нашему искомому значению
-            head = head.getNext(); // то убираем(перешагиваем) наш элемент списка(идем дальше)
-            return;
-        }
-        if (tail.getPrev() == node) {// если хвост равен нашему искомому значению
-            tail = tail.getPrev();// то убираем (идем обратно)
-            return;
+        Long idRemove = node.getData().getTaskIdNumber(); // // достали id задачи, поместили в idRemove
+        if (nodeMap.containsKey(idRemove)) { //если id есть, далее работаем с ним, id имеет(prev/id/next)
+            Node prevNode = node.getPrev();  //prevNode это прошлая нода (наш id задачи с двумя ссылками prev и next)
+            Node nextNode = node.getNext();//nextNode это следующая нода (наш id задачи с двумя ссылками prev и next)
+            if (prevNode != null) {  //если prevNode не пустая, т.е. содержит id
+                prevNode.setNext(nextNode);// то у нашей prevNode вызываем переход next к следующему id (nextNode)
+            } else { //иначе,если пустая
+                nextNode.setPrev(null);  //то значит наш nextNode со ссылкой prev будет ссылаться на null
+                head = nextNode; //head присвоили nextNode
+            }
+            if (nextNode != null) {// если id в nextNode есть(существует)
+                nextNode.setPrev(prevNode);//то у ноды nextNode вызываем переход от prev к нашему id(связываем) prevNode
+            } else {
+                prevNode.setNext(null);  // иначе prevNode своим next будет ссылаться на null
+                tail = prevNode; // tail присвоили prevNode
+            }
+            nodeMap.remove(idRemove);
         }
     }
 
 //собирать все задачи из внутреннего списка в обычный ArrayList
-    public ArrayList getTasks() {
-        Node newTaskNode = head;
+    public ArrayList<Task> getTasks() {
+        Node newTaskNode = head; //newTaskNode является головой списка
     while (newTaskNode != null) {
-        allTasks.add(newTaskNode.getData());
+        allTasks.add(newTaskNode.getData()); // добавлять до тех пор, пока newTaskNode не будет ссылаться next на null
+        newTaskNode = newTaskNode.getPrev(); // одновременно делаем возврат от prev нашей newTaskNode к нашей data
        }
+        Collections.reverse(allTasks);
     return allTasks;
+
     }
 
     private void checkingReturnTasks() {
@@ -75,7 +86,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 //тз реализация метода getHistory должна перекладывать задачи из связного списка в ArrayList для формирования ответа.
     @Override
     public List<Task> getHistory() {
-        return new ArrayList<>(getTasks());
+        return getTasks();
     }
 
     @Override

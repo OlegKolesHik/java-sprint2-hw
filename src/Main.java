@@ -37,7 +37,7 @@ System.out.println(inMemoryTaskManager.getEpic(333333333333L));
 System.out.println("История просмотров: " + inMemoryHistoryManager.getHistory());
 
 //удалите задачу, которая есть в истории, и проверьте, что при печати она не будет выводиться;
-taskManager.removeEpic(epic.getTaskIdNumber());
+System.out.println("История просмотров: " + taskManager.removeEpic(epic.getTaskIdNumber()));
 System.out.println("История просмотров: " + inMemoryHistoryManager.getHistory());
 
     }
