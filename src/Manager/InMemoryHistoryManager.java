@@ -67,14 +67,22 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     }
 
-    private void checkingReturnTasks() {
-        if (allTasks.size() > VIEWED_TASKS) {
-            allTasks.remove(0);
+    //Удаление дублей
+    private void checkingReturnTasks(ArrayList<Task> allTasks) {
+        int count = allTasks.size();
+        for(int i = 0; i < count; i++) {
+            for(int j = i + 1; j < count; j++){
+                if(allTasks.get(i).equals(allTasks.get(j))){
+                    allTasks.remove(j--);
+                    count--;
+                }
+            }
         }
     }
 
-//тз метод add(Task task) будет быстро удалять задачу из списка, если она там есть, а затем вставлять
+    //тз метод add(Task task) будет быстро удалять задачу из списка, если она там есть, а затем вставлять
 //её в конец двусвязного списка.
+
     @Override
     public void add(Task task) {
         if (nodeMap.containsKey(task.getTaskIdNumber())) {
@@ -89,14 +97,13 @@ public class InMemoryHistoryManager implements HistoryManager {
         return getTasks();
     }
 
+
     @Override
-    public void remove(Task task) {
+    public void remove(Long id) {
         if(!nodeMap.isEmpty()) {
-           if(nodeMap.containsKey(task.getTaskIdNumber())) {
-            checkingReturnTasks();
+                checkingReturnTasks(allTasks);
         }
-     }
-   }
+    }
 }
 
 

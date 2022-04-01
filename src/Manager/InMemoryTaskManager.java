@@ -3,7 +3,6 @@ package Manager;
 import Tasks.Epic;
 import Tasks.Subtask;
 import Tasks.Task;
-import Tasks.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,17 +12,15 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     public Long taskIdNumber;
-    public HashMap<Long, Epic> epicT;
-    public HashMap<Long, Subtask> subtaskT;
-    public HashMap<Long, Task> taskT;
+    private HashMap<Long, Epic> epicT = new HashMap<>();
+    private HashMap<Long, Subtask> subtaskT = new HashMap<>();
+    private HashMap<Long, Task> taskT = new HashMap<>();
 
-    public HistoryManager historyManager = Managers.getDefaultHistory();
+    private HistoryManager historyManager = Managers.getDefaultHistory();
 
-        public InMemoryTaskManager() {
+        public InMemoryTaskManager(HistoryManager historyManager) {
             this.taskIdNumber = 0L;
-            this.epicT = new HashMap<Long, Epic>();
-            this.subtaskT = new HashMap<Long, Subtask>();
-            this.taskT = new HashMap<Long, Task>();
+            this.historyManager = historyManager;
 
         }
 Subtask subtask;
@@ -80,9 +77,10 @@ Subtask subtask;
         }
 
         @Override
-        public HashMap<Long, Task> remove(Long taskIdNumber) { //2.6 Удаление по идентификатору.
-            taskT.remove(taskIdNumber);
-            return taskT;
+        public void removeT(Long taskIdNumber) { //2.6 Удаление по идентификатору.
+            if(this.taskT.containsKey(taskIdNumber)) {
+                this.taskT.remove(taskIdNumber);
+            }
         }
 
         @Override
@@ -113,13 +111,14 @@ Subtask subtask;
 
         @Override
         public HashMap creatureSub(Subtask subtask) { //2.4 Создание. Сам объект должен передаваться в качестве параметра.
-            if(subtask.getEpicIdNumber() != null) { // если эпик не пустой
-                if(epicT.containsKey(subtask.getEpicIdNumber())) { //и если ид эпика есть в epicT
+            if(subtask.getEpicIdNumber() == null) { // если эпик не пустой
+                if(!epicT.containsKey(subtask.getEpicIdNumber())) { //и если ид эпика есть в epicT
                     taskIdNumber++; // увеличили значение id
                     subtask.setTaskIdNumber(taskIdNumber); // присвоили id это измененное значение
                     subtaskT.put(taskIdNumber, subtask); // добавили id и подзадачу в таблицу подзадач
                 }
             }
+
             return subtaskT;
         }
         ///////////////////////////
@@ -148,8 +147,5 @@ Subtask subtask;
             epicT.put(taskIdNumber, epic);
             return epicT;
         }
-
-
-
 
 }

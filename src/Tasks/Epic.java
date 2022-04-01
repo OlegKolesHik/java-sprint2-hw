@@ -12,6 +12,10 @@ public class Epic extends Task {
 
     }
 
+    public Long getSubtaskIdNumber() {
+        return subtaskIdNumber;
+    }
+
     @Override
     public String toString() {
         return "Tasks.Epic{" +
@@ -56,5 +60,6 @@ public class Epic extends Task {
              return;
          }
     }
+
 }
 

@@ -59,7 +59,7 @@ public class Node {
     @Override
     public String toString() {
         return "Node{" +
-                "taskIdNumber=" + data +
+                "taskIdNumber =" + data +
                 ", next=" + next +
                 ", prev=" + prev +
                 ", head=" + head +
