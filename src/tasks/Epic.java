@@ -1,4 +1,4 @@
-package Tasks;
+package tasks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,8 +6,8 @@ import java.util.HashMap;
 public class Epic extends Task {
     private Long subtaskIdNumber;
 
-    public Epic(String сaseName, String taskDescription, TaskStatus statusTask) { // свои параметры и параметры супер-класса
-        super(сaseName, taskDescription, statusTask); // параметры супер-класса
+    public Epic(String сaseName, String taskDescription) { // свои параметры и параметры супер-класса
+        super(сaseName, taskDescription); // параметры супер-класса
         this.subtaskIdNumber = subtaskIdNumber;
 
     }

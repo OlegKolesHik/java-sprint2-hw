@@ -1,6 +1,6 @@
-package Manager;
+package manager;
 
-import Tasks.Task;
+import tasks.Task;
 import java.util.*;
 
 
@@ -56,7 +56,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
 //собирать все задачи из внутреннего списка в обычный ArrayList
-    public ArrayList<Task> getTasks() {
+    public ArrayList<Task> getTasks(ArrayList<Task> allTasks) {
         Node newTaskNode = head; //newTaskNode является головой списка
     while (newTaskNode != null) {
         allTasks.add(newTaskNode.getData()); // добавлять до тех пор, пока newTaskNode не будет ссылаться next на null
@@ -89,12 +89,13 @@ public class InMemoryHistoryManager implements HistoryManager {
             removeNode(nodeMap.remove(task.getTaskIdNumber()));
            }
         linkLast(task);
+        nodeMap.put(task.getTaskIdNumber(),tail);
     }
 
 //тз реализация метода getHistory должна перекладывать задачи из связного списка в ArrayList для формирования ответа.
     @Override
-    public List<Task> getHistory() {
-        return getTasks();
+    public ArrayList<Task> getHistory() {
+        return getTasks(allTasks);
     }
 
 

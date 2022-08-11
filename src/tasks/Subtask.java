@@ -1,12 +1,13 @@
-package Tasks;
+package tasks;
 
 //в подзадаче хранить id эпика которому она принадлежит, а в эпике хранить список id подзадач.
 public class Subtask extends Task {
 
     private Long epicIdNumber; //Параметр в рамках какого эпика она выполняется
 
-    public Subtask(String сaseName, String taskDescription, TaskStatus statusTask) {
-        super(сaseName, taskDescription, statusTask);
+
+    public Subtask(String сaseName, String taskDescription) {
+        super(сaseName, taskDescription);
         this.epicIdNumber = epicIdNumber;
 
     }

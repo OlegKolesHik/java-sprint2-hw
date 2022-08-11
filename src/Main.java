@@ -1,50 +1,28 @@
-import Manager.*;
+import manager.*;
 
-import Tasks.Epic;
-import Tasks.Subtask;
-import Tasks.Task;
-import Tasks.TaskStatus;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
 
 public class Main {
-    public static void main(String[] args) {
+        public static void main(String[] args) {
 
-TaskManager taskManager = Managers.getDefault();
-HistoryManager historyManager = Managers.getDefaultHistory();
+                HistoryManager historyManager = Managers.getDefaultHistory();
+                FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(historyManager);
 
-//создайте две задачи, эпик с тремя подзадачами и эпик без подзадач;
-Task task = new Task("Задача", "Описание", TaskStatus.NEW);
-System.out.println("Создание задачи 1 " + taskManager.creatureTask(task));
-System.out.println("Создание задачи 2 " + taskManager.creatureTask(task));
-System.out.println("Создание задачи 3 " + taskManager.creatureTask(task));
+                Task task = new Task("Задача", "Описание");
+                Epic epic = new Epic("Эпик", "Описание эпика");
+                Subtask subtask = new Subtask("Подзадача", "Описание подзадачи");
 
-Epic epic = new Epic("Эпик", "Описание эпика", TaskStatus.NEW);
-System.out.println("Создание эпика 1 " + taskManager.creatureEpic(epic));
+                fileBackedTasksManager.creatureTask(task);
+                fileBackedTasksManager.creatureEpic(epic);
+                fileBackedTasksManager.creatureSub(subtask);
 
-Subtask subtask = new Subtask("Подзадача", "Описание подзадачи", TaskStatus.NEW);
-System.out.println("Создание подзадачи 1 " + taskManager.creatureSub(subtask));
-System.out.println("Создание подзадачи 2 " + taskManager.creatureSub(subtask));
-System.out.println("Создание подзадачи 3 " + taskManager.creatureSub(subtask));
+                System.out.println(fileBackedTasksManager.getTask(task.getTaskIdNumber()));
+                System.out.println(fileBackedTasksManager.getSubtask(subtask.getTaskIdNumber()));
+                System.out.println(fileBackedTasksManager.getEpic(epic.getTaskIdNumber())+"\n");
 
-System.out.println("Создание эпика без подзадач " + taskManager.creatureEpic(epic));
+                System.out.println("История просмотров: " + fileBackedTasksManager.gettingTask());
 
-//запросите созданные задачи несколько раз в разном порядке;
-//после каждого запроса выведите историю и убедитесь, что в ней нет повторов;
-
-System.out.println("ТАСК " + taskManager.getTask(task.getTaskIdNumber()));
-System.out.println("ТАСК " + taskManager.getTask(task.getTaskIdNumber()));
-System.out.println("ТАСК " + taskManager.getTask(task.getTaskIdNumber()));
-System.out.println("История просмотров: " + taskManager.history());
-System.out.println("САБТАСК " + taskManager.getSubtask(subtask.getTaskIdNumber()));
-System.out.println("САБТАСК " + taskManager.getSubtask(subtask.getTaskIdNumber()));
-System.out.println("САБТАСК " + taskManager.getSubtask(subtask.getTaskIdNumber()));
-System.out.println("История просмотров: " + taskManager.history());
-System.out.println("ЭПИК " + taskManager.getEpic(epic.getTaskIdNumber()));
-System.out.println("ЭПИК " + taskManager.getEpic(epic.getTaskIdNumber()));
-System.out.println("История просмотров: " + taskManager.history());
-
-//удалите задачу, которая есть в истории, и проверьте, что при печати она не будет выводиться;
-taskManager.removeT(task.getTaskIdNumber());
-System.out.println("История просмотров:" + taskManager.history());
-
-    }
+        }
 }
