@@ -94,7 +94,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
 //тз реализация метода getHistory должна перекладывать задачи из связного списка в ArrayList для формирования ответа.
     @Override
-    public ArrayList<Task> getHistory() {
+    public List<Task> getHistory() {
         return getTasks(allTasks);
     }
 

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface TaskManager {
 
-    void clear();
+    void clearTask();
     Map<Long, Task> gettingIdTask(Long taskIdNumber);
     void removeT(Long taskIdNumber);
     Map<Long, Task> creatureTask(Task task);
@@ -19,8 +19,6 @@ public interface TaskManager {
     void clearSub();
     Map<Long, Subtask> gettingIdSub(Long subtaskIdNumber);
     void removeSub(Long subtaskIdNumber);
-
-
     Map<Long, Subtask> creatureSub(Subtask subtask);
     public Subtask getSubtask(Long SubtaskIdNumber);
 ///////////////////////////
@@ -32,5 +30,6 @@ public interface TaskManager {
     public Epic getEpic(Long EpicIdNumber);
 
     public List<Task> history();
+    List<Task> getPrioritizedTasks();
 }
 

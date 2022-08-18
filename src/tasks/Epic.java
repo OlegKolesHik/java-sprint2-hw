@@ -1,15 +1,42 @@
 package tasks;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static tasks.TaskStatus.NEW;
+
 public class Epic extends Task {
     private Long subtaskIdNumber;
+    private LocalDateTime endTime;
+    protected TaskStatus statusTask;
 
-    public Epic(String сaseName, String taskDescription) { // свои параметры и параметры супер-класса
-        super(сaseName, taskDescription); // параметры супер-класса
+    public Epic(Long subtaskIdNumber, String сaseName, String taskDescription, TaskStatus NEW, TaskType EPIC) { // свои параметры и параметры супер-класса
+        super(subtaskIdNumber, сaseName, taskDescription, TaskStatus.NEW, TaskType.EPIC); // параметры супер-класса
         this.subtaskIdNumber = subtaskIdNumber;
+    }
 
+    public Epic(Long subtaskIdNumber, String сaseName, String taskDescription, TaskStatus NEW, TaskType EPIC,
+                long duration, LocalDateTime startTime) {
+        super(subtaskIdNumber, сaseName, taskDescription, TaskStatus.NEW, TaskType.EPIC, duration, startTime); // параметры супер-класса
+        this.subtaskIdNumber = subtaskIdNumber;
+    }
+
+    public Epic(String s, String сaseName) {
+        super(s, сaseName);
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setStatusTask(TaskStatus statusTask) {
+        this.statusTask = statusTask;
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     public Long getSubtaskIdNumber() {
@@ -34,7 +61,7 @@ public class Epic extends Task {
         return ListId;
     }
 
-    public void status() {
+    public TaskStatus status() {
         int sNew = 0;
         int sDone = 0;
         int sInProgress = 0;
@@ -44,21 +71,23 @@ public class Epic extends Task {
             st.add(String.valueOf(subtaskT.get(k).getStatusTask()));
         }
          if (st.isEmpty()) {
-              statusTask = TaskStatus.NEW;
-            return;
+              statusTask = NEW;
+
          }
-         if (statusTask.equals(TaskStatus.NEW)) {
+         if (statusTask.equals(NEW)) {
             sNew = sNew + 1;
-            return;
+
          }
          if (statusTask.equals(TaskStatus.DONE)) {
             sDone = sDone + 1;
-             return;
+
          }
          if (statusTask.equals(TaskStatus.IN_PROGRESS)){
              sInProgress = sInProgress + 1;
-             return;
+
          }
+
+        return null;
     }
 
 }

@@ -18,22 +18,22 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     static File data;
 
 //Пусть новый менеджер получает файл для автосохранения в своём конструкторе и сохраняет его в поле
-    public FileBackedTasksManager(HistoryManager historyManager) {
+    public FileBackedTasksManager(File data) {
         super(historyManager);
         this.data = new File(file);
-        createFile(data);
+        /*createFile(data);*/
     }
 
 // Для этого создайте метод static void main(String[] args) в классе FileBackedTasksManager и реализуйте
 // небольшой сценарий:
 
     public static void main(String[] args) {
-        Task task = new Task("Задача", "Описание");
-        Epic epic = new Epic("Эпик", "Описание эпика");
-        Subtask subtask = new Subtask("Подзадача", "Описание подзадачи");
+        Task task = new Task(0L,"Task name", "Task description", TaskStatus.NEW, TaskType.TASK);
+        Epic epic = new Epic(0L,"Epic name", "Epic description", TaskStatus.NEW, TaskType.EPIC);
+        Subtask subtask = new Subtask(0L, "Subtask name,", "Epic description", TaskStatus.NEW, TaskType.SUBTASK);
 
         //Заведите несколько разных задач, эпиков и подзадач.
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(historyManager);
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(data);
         fileBackedTasksManager.creatureTask(task);
         fileBackedTasksManager.creatureEpic(epic);
         fileBackedTasksManager.creatureSub(subtask);
@@ -169,7 +169,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     public static FileBackedTasksManager loadFromFile(File data) {
 
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(historyManager);
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(data);
         if (Files.exists(data.toPath())) {
             try {
                 String[] fromFileBackedTasksManager = Files.readString(data.toPath(), StandardCharsets.UTF_8).split(" ");
@@ -210,8 +210,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void clear() {  //Удаление всех задач Task
-        super.clear();
+    public void clearTask() {  //Удаление всех задач Task
+        super.clearTask();
         save();
     }
 
